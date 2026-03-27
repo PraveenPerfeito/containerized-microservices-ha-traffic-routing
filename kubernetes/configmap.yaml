@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: skillfybank-config
+  namespace: skillfybank
+data:
+  NODE_ENV: "production"
+  SPRING_PROFILES_ACTIVE: "production"
+  FLASK_ENV: "production"
+  ACCOUNT_SERVICE_URL: "http://account-service:3000"
+  TRANSACTION_SERVICE_URL: "http://transaction-service:8080"
+  NOTIFICATION_SERVICE_URL: "http://notification-service:5000"

@@ -1,0 +1,46 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: notification-service-dr
+  namespace: skillfybank
+spec:
+  host: notification-service
+  trafficPolicy:
+    outlierDetection:
+      consecutiveGatewayErrors: 3
+      interval: 30s
+      baseEjectionTime: 60s
+  subsets:
+  - name: stable
+    labels:
+      version: v1
+  - name: canary
+    labels:
+      version: v2
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: notification-service-vs
+  namespace: skillfybank
+spec:
+  hosts:
+  - notification-service
+  http:
+  - match:
+    - headers:
+        x-version:
+          exact: canary
+    route:
+    - destination:
+        host: notification-service
+        subset: canary
+  - route:
+    - destination:
+        host: notification-service
+        subset: stable
+      weight: 90
+    - destination:
+        host: notification-service
+        subset: canary
+      weight: 10

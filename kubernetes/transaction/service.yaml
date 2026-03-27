@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: transaction-service
+  namespace: skillfybank
+  labels:
+    app: transaction-service
+spec:
+  type: ClusterIP
+  selector:
+    app: transaction-service
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
