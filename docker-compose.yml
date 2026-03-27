@@ -15,7 +15,7 @@ services:
     image: skillfybank/account-service:latest
     container_name: account-service
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - PORT=3000
       - NODE_ENV=production
